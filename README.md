@@ -3,7 +3,7 @@ My personal pizzeria
 # Technologies
   - React
   - Redux Toolkit
-  - SCSS
+  - SASS
   - TypeScript
   - Axios + Fetch
   - React Content Loader (скелетон)
