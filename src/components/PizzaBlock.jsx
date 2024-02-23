@@ -15,6 +15,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
             <li
               onClick={() => setActiveType(typeId)}
               className={activeType === typeId ? "active" : ""}
+              key={typeId}
             >
               {typeNames[typeId]}
             </li>
@@ -25,6 +26,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
             <li
               onClick={() => setActiveSize(i)}
               className={activeSize === i ? "active" : ""}
+              key={i}
             >
               {size} см.
             </li>
