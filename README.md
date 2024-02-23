@@ -6,7 +6,7 @@ My personal pizzeria
   - SASS
   - TypeScript
   - Axios + Fetch
-  - React Content Loader (скелетон)
-  - React Pagination (пагинация)
+  - React Content Loader
+  - React Pagination
   - Lodash.Debounce
   - Code Splitting, React Loadable, useWhyDidYouUpdate
