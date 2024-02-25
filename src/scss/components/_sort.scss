@@ -2,6 +2,7 @@
 
 .sort {
   position: relative;
+  
   &__label {
     display: flex;
     align-items: center;
@@ -22,6 +23,7 @@
   }
 
   &__popup {
+    width: 300px;
     position: absolute;
     right: 0;
     margin-top: 15px;
