@@ -1,27 +1,43 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { setSort } from '../redux/slices/filterSlice';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSort } from "../redux/slices/filterSlice";
+
+export const sortList = [
+  { name: "популярности (по убыванию)", sortProperty: "rating" },
+  { name: "популярности (по возрастанию)", sortProperty: "-rating" },
+  { name: "цене (по убыванию)", sortProperty: "price" },
+  { name: "цене (по возрастанию)", sortProperty: "-price" },
+  { name: "алфавиту (по возрастанию)", sortProperty: "title" },
+  { name: "алфавиту (по убыванию)", sortProperty: "-title" },
+];
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const sort = useSelector(state => state.filter.sort)
+  const sort = useSelector((state) => state.filter.sort);
+  const sortRef = useRef();
   const [isVisible, setIsVisible] = useState(false);
-  const list = [
-    { name: "популярности (по убыванию)", sortProperty: "rating" },
-    { name: "популярности (по возрастанию)", sortProperty: "-rating" },
-    { name: "цене (по убыванию)", sortProperty: "price" },
-    { name: "цене (по возрастанию)", sortProperty: "-price" },
-    { name: "алфавиту (по возрастанию)", sortProperty: "title" },
-    { name: "алфавиту (по убыванию)", sortProperty: "-title" },
-  ];
 
   const selectListItem = (obj) => {
     dispatch(setSort(obj));
     setIsVisible(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.path?.includes(sortRef.current)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
@@ -41,10 +57,12 @@ const Sort = () => {
       {isVisible && (
         <div className="sort__popup">
           <ul>
-            {list.map((obj, i) => (
+            {sortList.map((obj, i) => (
               <li
                 onClick={() => selectListItem(obj)}
-                className={sort.sortProperty === obj.sortProperty ? "active" : ""}
+                className={
+                  sort.sortProperty === obj.sortProperty ? "active" : ""
+                }
                 key={i}
               >
                 {obj.name}

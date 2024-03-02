@@ -10,3 +10,4 @@ My personal pizzeria
   - React Pagination
   - Lodash.Debounce
   - Code Splitting, React Loadable, useWhyDidYouUpdate
+  - QS
