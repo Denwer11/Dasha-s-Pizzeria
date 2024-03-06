@@ -12,6 +12,8 @@ export const fetchPizzas = createAsyncThunk(
   }
 );
 
+
+
 const initialState = {
   items: [],
   status: "loading", // loading | success | error
@@ -41,6 +43,7 @@ const pizzaSlice = createSlice({
     });
   },
 });
+export const selectPizzaData = (state) => state.pizza;
 
 export const { setItems } = pizzaSlice.actions;
 
