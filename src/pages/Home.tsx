@@ -15,7 +15,7 @@ import QueryString from "qs";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
@@ -25,11 +25,11 @@ const Home = () => {
     useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
-  const selectCategory = useCallback((idx) => {
-    dispatch(setCategoryId(idx));
+  const selectCategory = useCallback((index: number) => {
+    dispatch(setCategoryId(index));
   }, []);
 
-  const changePage = (page) => {
+  const changePage = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
@@ -47,7 +47,10 @@ const Home = () => {
     const sortBy = sort.sortProperty.replace("-", "");
     const search = searchValue ? `${searchValue}` : "";
 
-    dispatch(fetchPizzas({ category, order, sortBy, search, currentPage }));
+    dispatch(
+      // @ts-ignore
+      fetchPizzas({ category, order, sortBy, search, currentPage })
+    );
 
     window.scrollTo(0, 0);
   };
@@ -100,7 +103,7 @@ const Home = () => {
     //   }
     //   return false;
     // })
-    .map((obj) => (
+    .map((obj: any) => (
       <Link to={`/pizza/${obj.id}`} key={obj.id}>
         <PizzaBlock {...obj} />
       </Link>
@@ -112,7 +115,7 @@ const Home = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} selectCategory={selectCategory} />
-        <Sort value={sort.sortProperty} />
+        <Sort/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (

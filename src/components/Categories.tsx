@@ -1,5 +1,9 @@
-const Categories = ({value, selectCategory}) => {
+type CategoriesProps = {
+  value: number;
+  selectCategory: any;
+};
 
+const Categories: React.FC<CategoriesProps> = ({ value, selectCategory }) => {
   const categories = [
     "Все",
     "Мясные",
