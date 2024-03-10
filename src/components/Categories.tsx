@@ -1,6 +1,6 @@
 type CategoriesProps = {
   value: number;
-  selectCategory: any;
+  selectCategory: (i: number) => void;
 };
 
 const Categories: React.FC<CategoriesProps> = ({ value, selectCategory }) => {

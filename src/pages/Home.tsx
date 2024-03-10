@@ -25,8 +25,8 @@ const Home: React.FC = () => {
     useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
 
-  const selectCategory = useCallback((index: number) => {
-    dispatch(setCategoryId(index));
+  const selectCategory = useCallback((i: number) => {
+    dispatch(setCategoryId(i));
   }, []);
 
   const changePage = (page: number) => {
