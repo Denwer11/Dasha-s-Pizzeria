@@ -4,7 +4,7 @@ import Sort, { sortList } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectFilter,
   setCategoryId,
@@ -13,11 +13,16 @@ import {
 } from "../redux/slices/filterSlice";
 import QueryString from "qs";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
+import {
+  SearchPizzaParams,
+  fetchPizzas,
+  selectPizzaData,
+} from "../redux/slices/pizzaSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -48,8 +53,13 @@ const Home: React.FC = () => {
     const search = searchValue ? `${searchValue}` : "";
 
     dispatch(
-      // @ts-ignore
-      fetchPizzas({ category, order, sortBy, search, currentPage })
+      fetchPizzas({
+        category,
+        order,
+        sortBy,
+        search,
+        currentPage: String(currentPage),
+      })
     );
 
     window.scrollTo(0, 0);
@@ -63,7 +73,7 @@ const Home: React.FC = () => {
         currentPage,
       });
 
-      navigate(`?${queryString}`);
+      navigate(`/?${queryString}`);
     }
     isMounted.current = true;
     getPizzas();
@@ -71,15 +81,17 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (window.location.search) {
-      const params = QueryString.parse(window.location.search.substring(1));
-      const sort = sortList.find(
-        (obj) => obj.sortProperty === params.sortProperty
-      );
-
+      const params = QueryString.parse(
+        window.location.search.substring(1)
+      ) as unknown as SearchPizzaParams;
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+      
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          searchValue: params.search,
+          categoryId: Number(params.category),
+          currentPage: Number(params.currentPage),
+          sort: sort || sortList[0],
         })
       );
       isSearch.current = true;
@@ -115,7 +127,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} selectCategory={selectCategory} />
-        <Sort/>
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (
