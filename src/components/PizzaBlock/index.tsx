@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { CartItem, addItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { CartItemType, addItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { Link } from 'react-router-dom';
 
 type PizzaBlockProps = {
   id: string;
@@ -31,7 +32,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAdd = () => {
-    const item: CartItem = {
+    const item: CartItemType = {
       id,
       title,
       price,
@@ -46,7 +47,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt={title} />
+        <Link to={`/pizza/${id}`}>
+        <img className="pizza-block__image" src={imageUrl} alt={title} /></Link>
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>

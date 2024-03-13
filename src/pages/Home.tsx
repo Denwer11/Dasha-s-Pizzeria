@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import Categories from "../components/Categories";
-import Sort, { sortList } from "../components/Sort";
+import Sort, { sortList } from "../components/SortPopup";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
@@ -66,47 +66,47 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isMounted.current) {
-      const queryString = QueryString.stringify({
-        sortProperty: sort.sortProperty,
-        categoryId,
-        currentPage,
-      });
+    // if (isMounted.current) {
+    //   const queryString = QueryString.stringify({
+    //     sortProperty: sort.sortProperty,
+    //     categoryId,
+    //     currentPage,
+    //   });
 
-      navigate(`/?${queryString}`);
-    }
-    isMounted.current = true;
+    //   navigate(`/?${queryString}`);
+    // }
+    // isMounted.current = true;
     getPizzas();
   }, [categoryId, sort.sortProperty, currentPage]);
 
-  useEffect(() => {
-    if (window.location.search) {
-      const params = QueryString.parse(
-        window.location.search.substring(1)
-      ) as unknown as SearchPizzaParams;
-      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
-      
-      dispatch(
-        setFilters({
-          searchValue: params.search,
-          categoryId: Number(params.category),
-          currentPage: Number(params.currentPage),
-          sort: sort || sortList[0],
-        })
-      );
-      isSearch.current = true;
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.location.search) {
+  //     const params = QueryString.parse(
+  //       window.location.search.substring(1)
+  //     ) as unknown as SearchPizzaParams;
+  //     const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
+  //     dispatch(
+  //       setFilters({
+  //         searchValue: params.search,
+  //         categoryId: Number(params.category),
+  //         currentPage: Number(params.currentPage),
+  //         sort: sort || sortList[0],
+  //       })
+  //     );
+  //     isMounted.current = true;
+  //   }
+  // }, []);
 
-    if (!isSearch.current) {
-      getPizzas();
-    }
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
 
-    isSearch.current = false;
-  }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+  //   if (!isSearch.current) {
+  //     getPizzas();
+  //   }
+
+  //   isSearch.current = false;
+  // }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   const pizzas = items
     // .filter((obj) => {
@@ -115,11 +115,7 @@ const Home: React.FC = () => {
     //   }
     //   return false;
     // })
-    .map((obj: any) => (
-      <Link to={`/pizza/${obj.id}`} key={obj.id}>
-        <PizzaBlock {...obj} />
-      </Link>
-    ));
+    .map((obj: any) => <PizzaBlock {...obj} key={obj.id} />);
 
   const skeletons = [...new Array(6)].map((_, i) => <Skeleton key={i} />);
 
@@ -127,7 +123,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} selectCategory={selectCategory} />
-        <Sort />
+        <Sort value={sort}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (
