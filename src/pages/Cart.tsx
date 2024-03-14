@@ -2,8 +2,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem";
-import { clearItems, selectCart } from "../redux/slices/cartSlice";
+import { clearItems } from "../redux/cart/slice";
 import CartEmpty from "../components/CartEmpty";
+import { selectCart } from '../redux/cart/selectors';
 
 const Cart:React.FC = () => {
   const dispatch = useDispatch();
@@ -126,7 +127,7 @@ const Cart:React.FC = () => {
                 <path
                   d="M7 13L1 6.93015L6.86175 1"
                   stroke="#D3D3D3"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />

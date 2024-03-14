@@ -232,16 +232,16 @@ body {
           opacity: 0.4;
           border-color: #787878;
 
-          &:active{
+          &:active {
             transform: none;
           }
 
-          &:hover{
+          &:hover {
             background-color: transparent;
           }
 
           svg path {
-            fill: #787878: ;
+            fill: #787878;
           }
         }
       }
