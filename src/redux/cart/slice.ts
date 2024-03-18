@@ -3,12 +3,7 @@ import { getCartFromLS } from "../../utils/getCartFromLS";
 import { calcTotalPrice } from "../../utils/calcTotalPrice";
 import { CartItemType, ICartSliceState } from './types';
 
-const { items, totalPrice } = getCartFromLS();
-
-const initialState: ICartSliceState = {
-  totalPrice,
-  items,
-};
+const initialState: ICartSliceState = getCartFromLS();
 
 const cartSlice = createSlice({
   name: "cart",
